@@ -16,6 +16,7 @@ namespace TextFormatter
     {   
         public string inputText = String.Empty;
         public string patternA = @"\b\d{16,}\b";
+        public string text = String.Empty;  
         List<User> users = new List<User>();
         User user = new User();
         List<string> listofusers = new List<string>();
@@ -28,6 +29,11 @@ namespace TextFormatter
 
         private void button1_Click(object sender, EventArgs e)
         {
+            text = string.Empty;
+            textBox2.Text = string.Empty;
+            strings.Clear();    
+            listofusers.Clear();    
+            users.Clear();  
             inputText = textBox1.Text;
             MatchCollection matches = Regex.Matches(inputText, patternA);
         
@@ -56,16 +62,16 @@ namespace TextFormatter
             foreach (var element in listAsc)
             {
                 listofusers.Add(element.Id + " : " + element.count);
+                text += element.Id + " : " + element.count.ToString() + "\r\n";
             }
-            foreach (var element in listofusers)
-            {
-                listView1.Items.Add(element);   
-            }
-
+            textBox2.Text = text;
+            
+           
 
 
 
 
         }
+
     }
 }
