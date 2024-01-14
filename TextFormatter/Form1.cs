@@ -16,6 +16,9 @@ namespace TextFormatter
     {   
         public string inputText = String.Empty;
         public string patternA = @"\b\d{16,}\b";
+        List<User> users = new List<User>();
+        User user = new User();
+        List<string> listofusers = new List<string>();
         List<string> strings = new List<string>();
         public Form1()
         {
@@ -27,37 +30,41 @@ namespace TextFormatter
         {
             inputText = textBox1.Text;
             MatchCollection matches = Regex.Matches(inputText, patternA);
-            Label users = new Label();
-            users.Text = "Users";
-            Label count = new Label();
-            count.Text = "Count";
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.Controls.Add(users, 0, 0);
-            tableLayoutPanel1.Controls.Add(count, 1, 0);
+        
 
             foreach (Match match in matches)
-            {
-                
-                
-                
-                strings.Add(match.Value);
-
-                
-
-
+            {              
+                strings.Add(match.Value);                                     
             }
-            tableLayoutPanel1.RowCount = strings.Count + 1;
-            foreach (var element in strings)
+            var countByValue = strings
+             .GroupBy(item => item)
+             .Select(group => new { Value = group.Key, Count = group.Count() })
+             .ToList();
+
+
+
+
+            foreach (var element in countByValue)
             {
-                int i = 1;
-                Label l = new Label();
-                l.Text = element;
-                tableLayoutPanel1.Controls.Add(l,0,i);
-                i++;
+                user = new User();
+                user.Id = element.Value;
+                user.count = element.Count;
+                users.Add(user);
+              
             }
-            
-            List<string> listofusers = new List<string>();
-            
+            var listAsc = users.OrderByDescending(x => x.count);
+            foreach (var element in listAsc)
+            {
+                listofusers.Add(element.Id + " : " + element.count);
+            }
+            foreach (var element in listofusers)
+            {
+                listView1.Items.Add(element);   
+            }
+
+
+
+
 
         }
     }
