@@ -41,14 +41,23 @@ namespace TextFormatter
                 
                 
                 strings.Add(match.Value);
-               
-               
-                                
+
+                
+
+
+            }
+            tableLayoutPanel1.RowCount = strings.Count + 1;
+            foreach (var element in strings)
+            {
+                int i = 1;
+                Label l = new Label();
+                l.Text = element;
+                tableLayoutPanel1.Controls.Add(l,0,i);
+                i++;
             }
             
-            tableLayoutPanel1.RowCount = strings.Count + 1;
             List<string> listofusers = new List<string>();
-            listofusers = strings.Where(x => x.);
+            
 
         }
     }
